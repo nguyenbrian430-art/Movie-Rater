@@ -1,14 +1,30 @@
 .App {
-  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+}
+
+.sideHeaders {
+  display: grid;
+  grid-template-columns: auto auto;
+  text-align: center;
+}
+.sideHeaders h1 {
+  padding: 10px;
+  text-align: center;
+}
+h1 {
+  font-size: 30px;
+  padding: 10px;
+  font-weight: 400;
+}
+h2 {
+  font-size: 20px;
+  padding: 5px;
+  font-weight: 400;
 }
