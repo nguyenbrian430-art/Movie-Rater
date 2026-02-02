@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function MovieList() {
+export default function MovieList({movieClicked}) {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
 
@@ -31,9 +31,14 @@ export default function MovieList() {
 
   return (
     <div>
-      <h1>Movie List</h1>
       {movies.map((movie) => {
-        return <h2 key={movie.id}>{movie.title}</h2>;
+        return (
+          <div key={movie.id}>
+            <h2 onClick={(evt)=>{
+              movieClicked(movie)
+            }}>{movie.title}</h2>
+          </div>
+        );
       })}
     </div>
   );

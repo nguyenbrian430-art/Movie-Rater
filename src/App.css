@@ -14,7 +14,7 @@
   grid-template-columns: auto auto;
   text-align: center;
 }
-.sideHeaders h1 {
+.sideHeaders .details{
   padding: 10px;
   text-align: center;
 }
