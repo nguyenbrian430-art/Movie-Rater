@@ -2,15 +2,17 @@ import {useState} from "react";
 import "./App.css";
 import MovieList from "./components/movie-list";
 import MovieDetail from "./components/movie-details";
+import MovieForm from "./components/movie-forms";
 
 function App() {
 
 
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [editeddMovie, setEditedMovie] = useState(null);
 
-  const movieClicked = movie =>{
-    setSelectedMovie(movie);
-  }
+  // const movieClicked = movie =>{
+  //   setSelectedMovie(movie);
+  // }
 
 
   return (
@@ -19,9 +21,10 @@ function App() {
         <h1>Movie Rater</h1>
       </header>
       <div className="sideHeaders">
-          <MovieList movieClicked={movieClicked}/>
+          <MovieList movieClicked={setSelectedMovie} editMovie={setEditedMovie}/>
           <div className="details">
-            <MovieDetail movie={selectedMovie}/>
+            <MovieDetail movie={selectedMovie} updateMovie={setSelectedMovie}/>
+            <MovieForm movie={editeddMovie}/>
           </div>
       </div>
     </div>

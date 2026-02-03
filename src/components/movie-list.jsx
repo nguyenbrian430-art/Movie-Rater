@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
-export default function MovieList({movieClicked}) {
+
+export default function MovieList({movieClicked, editMovie}) {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
 
@@ -34,9 +37,12 @@ export default function MovieList({movieClicked}) {
       {movies.map((movie) => {
         return (
           <div key={movie.id}>
-            <h2 onClick={(evt)=>{
+            <h2 className="eachMovieName" 
+            onClick={(evt)=>{
               movieClicked(movie)
             }}>{movie.title}</h2>
+            <FaEdit onClick={(evt)=>{editMovie(movie)}}/>
+            <MdDelete />
           </div>
         );
       })}
