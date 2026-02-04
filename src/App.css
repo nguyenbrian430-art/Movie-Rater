@@ -8,17 +8,19 @@
   text-align: center;
   font-size: calc(10px + 2vmin);
   padding:30px;
+  margin:0 10px 0 10px;
   border-bottom: 3px solid skyblue;
 }
 
 .sideHeaders {
+  margin:0 10px 0 10px;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 50% 50%;
   text-align: center;
 }
 .sideHeaders .details{
-  padding: 10px;
   text-align: center;
+  
 }
 h1 {
   font-size: 30px;
@@ -50,4 +52,25 @@ h2 {
 
 .eachMovieName{
   cursor:pointer;
+  text-align:left;
+}
+
+.movieListIcons{
+  display:grid;
+  grid-template-columns: 1fr auto auto;
+  place-items:center;
+}
+
+.movieListIcons .icons{
+  font-size:20px;
+  padding: 0 5px;
+}
+
+.form{
+  display:grid;
+  grid-template-columns: auto auto;
+  row-gap:10px;
+  align-items:center;
+  padding-top:20px;
+  
 }

@@ -3,7 +3,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 
-export default function MovieList({movieClicked, editMovie}) {
+export default function MovieList({movieClicked}) {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
 
@@ -36,13 +36,13 @@ export default function MovieList({movieClicked, editMovie}) {
     <div>
       {movies.map((movie) => {
         return (
-          <div key={movie.id}>
+          <div key={movie.id} className="movieListIcons">
             <h2 className="eachMovieName" 
             onClick={(evt)=>{
-              movieClicked(movie)
+              movieClicked(movie, false)
             }}>{movie.title}</h2>
-            <FaEdit onClick={(evt)=>{editMovie(movie)}}/>
-            <MdDelete />
+            <FaEdit className="icons" onClick={(evt)=>{movieClicked(movie, true)}}/>
+            <MdDelete className="icons" />
           </div>
         );
       })}
