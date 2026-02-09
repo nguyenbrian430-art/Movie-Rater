@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaRegStar, FaS, FaStar } from "react-icons/fa6";
+import API from "../services/api-service";
 
 export default function MovieDetail({movie, updateMovie}) {
 
@@ -7,45 +8,19 @@ export default function MovieDetail({movie, updateMovie}) {
     const [error, setError] = useState(null);
     
     const rateMovie = async (rate)=> {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/api/movies/${movie.id}/rate_movie/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Token 9b2715743b984db9f4b6ae67f0efdfab9b0a453e"
-          },
-          body: JSON.stringify({stars: rate})
-        });
-        if (!response.ok) {
-          setError("Error setting rating");
-          return;
-        }
-        const result = await response.json();
-        setError("Successfully updated")
-        getNewMovie();
-      } catch {
-        setError("Error setting rating");
+      const rateMovie = async () =>{
+        const resp = await API.rateMovie(movie.id,{stars: rate});
+        if(resp) getNewMovie();
       }
+      rateMovie();
     };
 
     const getNewMovie = async (rate)=> {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/api/movies/${movie.id}/`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Token 9b2715743b984db9f4b6ae67f0efdfab9b0a453e"
+      const fetchMovies = async () =>{
+            const resp = await API.getMovie(movie.id);
+            if(resp) updateMovie(resp);
           }
-        });
-        if (!response.ok) {
-          setError("Error setting movie");
-          return;
-        }
-        const result = await response.json();
-        updateMovie(result);
-      } catch {
-        setError("Error getting movies");
-      }
+          fetchMovies();
     };
 
 
