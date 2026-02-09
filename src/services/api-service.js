@@ -19,4 +19,38 @@ export default class API{
       
     }
 
+
+    static async createMovie(body){
+        const response = await fetch(`${API_URL}/movies/`,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${TOKEN}`
+          },
+          body: JSON.stringify(body) 
+        });
+        if (!response.ok) {
+          return null;
+        }
+        return await response.json();
+
+      
+    }
+
+    static async removeMovie(movie_id){
+        const response = await fetch(`${API_URL}/movies/${movie_id}/`,{
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${TOKEN}`
+          }
+        });
+        if (!response.ok) {
+          return false;
+        }
+        return true;
+
+      
+    }
+
 }

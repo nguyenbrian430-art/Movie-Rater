@@ -1,13 +1,25 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 
 import API from "../services/api-service";
 
-export default function MovieForm({movie}){
+export default function MovieForm({movie, updatedMovie, addNewMovie}){
+
     const [title,setTitle]=useState(movie.title)
     const [description,setDescription]=useState(movie.description)
 
-    const saveMovie= ()=> {
-        API.updateMovie(movie.id, {title, description});
+    useEffect( ()=>{
+        setTitle(movie.title);
+        setDescription(movie.description);
+    },[movie])
+
+    const saveMovie= async ()=> {
+        const resp = await API.updateMovie(movie.id, {title, description});
+        if(resp) updatedMovie(resp);
+    }
+
+    const createMovie= async ()=> {
+        const resp = await API.createMovie({title, description});
+        if(resp) addNewMovie(resp);
     }
 
     return (
@@ -17,7 +29,10 @@ export default function MovieForm({movie}){
             <label htmlFor="description">Description</label>
             <textarea id="desciption" placeholder="Description" value={description} onChange={(evt=>setDescription(evt.target.value))}/>
 
-            <button onClick={()=>saveMovie()}>UPDATE MOVIE</button>
+            { movie.id ? 
+                <button onClick={()=>saveMovie()}>UPDATE MOVIE</button> :
+                <button onClick={()=>createMovie()}>CREATE MOVIE</button>
+            }
         </div>
     )
 }

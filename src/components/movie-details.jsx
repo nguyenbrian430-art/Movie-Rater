@@ -65,7 +65,7 @@ export default function MovieDetail({movie, updateMovie}) {
                 <h1 className="movieRaterHeader"> Rate the Movie!</h1>
                 <div className="flex stars">
                     {[...Array(5)].map( (el,indx)=>{
-                        return <FaStar className={highlighted > indx && "starRatingFill"}
+                        return <FaStar key={indx} className={highlighted > indx && "starRatingFill"}
                             onMouseEnter={()=> setHighlighted(indx+1)} 
                             onMouseLeave={() => setHighlighted(-1)}
                             onClick={()=> rateMovie(indx+1)}/>

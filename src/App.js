@@ -9,7 +9,11 @@ function App() {
 
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [editedMovie, setEditedMovie] = useState(null);
+  const [updatedMovie, setUpdatedMovie] = useState(null);
+  const [newMovie, setNewMovie] = useState(null);
 
+
+  
   const movieClicked = (movie, isEdit) =>{
     if(isEdit){
       setSelectedMovie(null);
@@ -21,6 +25,11 @@ function App() {
     }
   }
 
+  const createNewMovie = () =>{
+    setSelectedMovie(null);
+    setEditedMovie({title:"", description: ""})
+  }
+
 
   return (
     <div className="App">
@@ -28,11 +37,14 @@ function App() {
         <h1>Movie Rater</h1>
       </header>
       <div className="sideHeaders">
-          <MovieList movieClicked={movieClicked} editMovie={setEditedMovie}/>
-          <div className="details">
-            <MovieDetail movie={selectedMovie} updateMovie={setSelectedMovie}/>
-            {editedMovie && <MovieForm movie={editedMovie}/>}
-          </div>
+        <div>
+        <MovieList movieClicked={movieClicked} editMovie={setEditedMovie} newMovie={newMovie} updatedMovie={updatedMovie}/>
+        <button onClick={() => createNewMovie()}>Create New Movie</button>
+        </div>
+        <div className="details">
+          <MovieDetail movie={selectedMovie} updateMovie={setSelectedMovie}/>
+          {editedMovie && <MovieForm movie={editedMovie} updatedMovie={setUpdatedMovie} addNewMovie={setNewMovie}/>}
+        </div>
       </div>
     </div>
   );
