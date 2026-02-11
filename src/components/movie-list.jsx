@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import API from "../services/api-service";
+import { useCookies } from "react-cookie";
 
 
 export default function MovieList({movieClicked, updatedMovie, newMovie}) {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
+  const [token] = useCookies("mr-token");
 
   useEffect(()=>{
     setMovies([...movies,newMovie]);
@@ -21,7 +23,7 @@ export default function MovieList({movieClicked, updatedMovie, newMovie}) {
 
   useEffect(() => {
     const fetchListOfMovies = async () =>{
-      const resp = await API.fetchMovie();
+      const resp = await API.fetchMovie(token["mr-token"]);
       if(resp) setMovies(resp);
     }
     fetchListOfMovies();
@@ -29,7 +31,7 @@ export default function MovieList({movieClicked, updatedMovie, newMovie}) {
 
 
   const removeMovie = (movieToBeRemoved) =>{
-    const resp = API.removeMovie(movieToBeRemoved.id);
+    const resp = API.removeMovie(movieToBeRemoved.id, token["mr-token"]);
     if(resp){
       const newMovies = movies.filter(movie =>
       movie.id ===movieToBeRemoved.id ? false : true

@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { FaRegStar, FaS, FaStar } from "react-icons/fa6";
 import API from "../services/api-service";
+import { useCookies } from "react-cookie";
 
 export default function MovieDetail({movie, updateMovie}) {
 
     const [highlighted,setHighlighted]= useState(-1);
     const [error, setError] = useState(null);
+    const [token] = useCookies("mr-token");
     
     const rateMovie = async (rate)=> {
       const rateMovie = async () =>{
-        const resp = await API.rateMovie(movie.id,{stars: rate});
+        const resp = await API.rateMovie(movie.id,{stars: rate},token["mr-token"]);
         if(resp) getNewMovie();
       }
       rateMovie();
     };
 
-    const getNewMovie = async (rate)=> {
+    const getNewMovie = async ()=> {
       const fetchMovies = async () =>{
-            const resp = await API.getMovie(movie.id);
+            const resp = await API.getMovie(movie.id, token["mr-token"]);
             if(resp) updateMovie(resp);
           }
           fetchMovies();

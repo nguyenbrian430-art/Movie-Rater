@@ -1,11 +1,12 @@
 import React,{useState, useEffect} from "react";
-
 import API from "../services/api-service";
+import { useCookies } from "react-cookie";
 
 export default function MovieForm({movie, updatedMovie, addNewMovie}){
 
     const [title,setTitle]=useState(movie.title)
     const [description,setDescription]=useState(movie.description)
+    const [token] = useCookies("mr-token");
 
     useEffect( ()=>{
         setTitle(movie.title);
@@ -13,12 +14,12 @@ export default function MovieForm({movie, updatedMovie, addNewMovie}){
     },[movie])
 
     const saveMovie= async ()=> {
-        const resp = await API.updateMovie(movie.id, {title, description});
+        const resp = await API.updateMovie(movie.id, {title, description}, token["mr-token"]);
         if(resp) updatedMovie(resp);
     }
 
     const createMovie= async ()=> {
-        const resp = await API.createMovie({title, description});
+        const resp = await API.createMovie({title, description},token["mr-token"]);
         if(resp) addNewMovie(resp);
     }
 
