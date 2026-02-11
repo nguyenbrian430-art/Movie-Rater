@@ -37,9 +37,13 @@ export default function Auth(){
         register();
     }
 
+    const isDisabled = username == '' || password == '';
+
     return(
-        <div className="loginScreen"> 
-            {isLoginView ? <h1>Login</h1> : <h1>Register</h1>}
+        <div className="App">
+            <header className="App-header">
+                {isLoginView ? <h1>Login</h1> : <h1>Register</h1>}
+            </header>
             <div className="form">
                 <label htmlFor="username">Username</label>
                 <input id="username" type="text" placeholder="Username" value={username} onChange={(evt=>setUsername(evt.target.value))}/>
@@ -47,9 +51,11 @@ export default function Auth(){
                 <label htmlFor="password">Password</label>
                 <input id="password" type="password" placeholder="password" value={password} onChange={(evt=>setPassword(evt.target.value))}/>
 
+                <p>&nbsp;</p>
+    
                 {isLoginView ?
-                <button onClick={()=>loginUser()}>Login</button> :
-                <button onClick={()=>registerUser()}>Register</button>
+                <button onClick={()=>loginUser()} disabled={isDisabled}>Login</button> :
+                <button onClick={()=>registerUser()} disabled={isDisabled}>Register</button>
                 }
                 
             </div>

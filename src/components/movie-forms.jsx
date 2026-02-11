@@ -23,6 +23,8 @@ export default function MovieForm({movie, updatedMovie, addNewMovie}){
         if(resp) addNewMovie(resp);
     }
 
+    const isDisabled = title == '' || description == '';
+
     return (
         <div className="form">
             <label htmlFor="title">Title</label>
@@ -30,9 +32,11 @@ export default function MovieForm({movie, updatedMovie, addNewMovie}){
             <label htmlFor="description">Description</label>
             <textarea id="desciption" placeholder="Description" value={description} onChange={(evt=>setDescription(evt.target.value))}/>
 
+            <p>&nbsp;</p>
+
             { movie.id ? 
-                <button onClick={()=>saveMovie()}>UPDATE MOVIE</button> :
-                <button onClick={()=>createMovie()}>CREATE MOVIE</button>
+                <button onClick={()=>saveMovie()} disabled={isDisabled}>Update Movie</button> :
+                <button onClick={()=>createMovie() } disabled={isDisabled}>Create Movie</button>
             }
         </div>
     )
