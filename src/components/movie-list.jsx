@@ -3,12 +3,18 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import API from "../services/api-service";
 import { useCookies } from "react-cookie";
+import useFetch from "../services/useFetch";
 
 
 export default function MovieList({movieClicked, updatedMovie, newMovie}) {
   const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
+  //const [error, setError] = useState(null);
   const [token] = useCookies("mr-token");
+  const {data,loading,error} = useFetch("/api/movies/");
+
+  useEffect(()=>{
+    setMovies(data);
+  }, [data])
 
   useEffect(()=>{
     setMovies([...movies,newMovie]);
@@ -21,13 +27,13 @@ export default function MovieList({movieClicked, updatedMovie, newMovie}) {
     setMovies(updatedMovies);
   }, [updatedMovie])
 
-  useEffect(() => {
-    const fetchListOfMovies = async () =>{
-      const resp = await API.fetchMovie(token["mr-token"]);
-      if(resp) setMovies(resp);
-    }
-    fetchListOfMovies();
-  }, []);
+  // useEffect(() => {
+  //   const fetchListOfMovies = async () =>{
+  //     const resp = await API.fetchMovie(token["mr-token"]);
+  //     if(resp) setMovies(resp);
+  //   }
+  //   fetchListOfMovies();
+  // }, []);
 
 
   const removeMovie = (movieToBeRemoved) =>{
@@ -41,6 +47,8 @@ export default function MovieList({movieClicked, updatedMovie, newMovie}) {
   }
 
   if (error) return <h1>{error}</h1>;
+  if (loading) return <h1>Loading</h1>;
+
 
   return (
     <div>

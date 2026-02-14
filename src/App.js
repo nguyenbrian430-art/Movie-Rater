@@ -5,6 +5,7 @@ import MovieDetail from "./components/movie-details";
 import MovieForm from "./components/movie-forms";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa";
 
 function App() {
 
@@ -13,12 +14,12 @@ function App() {
   const [editedMovie, setEditedMovie] = useState(null);
   const [updatedMovie, setUpdatedMovie] = useState(null);
   const [newMovie, setNewMovie] = useState(null);
-  const [token] = useCookies("mr-token");
+  const [cookie, setCookie, deleteCookie] = useCookies("mr-token");
   const navigate = useNavigate();
 
   useEffect(()=>{
-    if(!token["mr-token"]) navigate('/');
-  },[token])
+    if(!cookie["mr-token"]) navigate('/');
+  },[cookie])
 
 
   
@@ -38,12 +39,18 @@ function App() {
     setEditedMovie({title:"", description: ""})
   }
 
+  const logoutUser = () => {
+    deleteCookie(["mr-token"]);
+    navigate('/');
+  }
+
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Movie Rater</h1>
       </header>
+      <h1 className="logout" onClick={()=>logoutUser()}><FaSignOutAlt /></h1>
       <div className="sideHeaders">
         <div>
         <MovieList movieClicked={movieClicked} editMovie={setEditedMovie} newMovie={newMovie} updatedMovie={updatedMovie}/>
